@@ -3,7 +3,7 @@
 
 bank_full<-read.csv("bank-full.csv",header=TRUE,sep=";")
 bank_full$y<-bank_full$y=="yes"
-# Find length if data set
+# Find length of data set
 n<-nrow(bank_full)
 for(i in 1:17){
   cat(i, class(bank_full[,i]),'\n')
@@ -40,7 +40,6 @@ step(logitMod,direction="backward")
 step(glm(bank_full$y~1,family=binomial (link=logit)), direction="forward",scope=~bank_full$age+bank_full$job+bank_full$marital+bank_full$education+bank_full$default+bank_full$balance+bank_full$housing+bank_full$loan+bank_full$contact+bank_full$campaign+bank_full$pdays+bank_full$NPC+bank_full$previous+bank_full$poutcome,data=bank_full)
 # Result: full model minus age and pday
 # "step" conclude the full model minus age and pday is best (but probably over fitted)
-
 optimMod <- glm(y ~job+marital+education+default+balance+housing+loan+contact+campaign+NPC+previous+poutcome, data = bank_full, family = binomial(logit))
 summary(optimMod)
 # Minus age and pday
@@ -49,7 +48,6 @@ table(pred =round(fitted(optimMod)),true=bank_full$y)
 
 
 ##################### Cross validation ########################
-
 
 # x% using in training and test set (cross validation)
 x=60
@@ -101,11 +99,11 @@ scroingTabel(predTest,bankTest$y)
 
 ##################### Other Relationships ########################
 summary(glm(y ~age+job+marital+education+default+balance+housing+loan+contact+day+month+duration+campaign+pdays+NPC+previous+poutcome, data = bank_full, family = binomial(logit)))
-# non-significant age, default, previous, pdays, NPC, previous...
+# non-significant age, default, pdays, NPC, previous...
 
 # call as late in the moneth as possible (why, need futher investigation)
 # good month to call: mar, sep, oct, dec
-# bad month to call: ja, jul, nov
+# bad month to call: jan, jul, nov
 # Make the call last long (duration)
 
 
@@ -165,5 +163,5 @@ which(prof==max(prof))*2
 
 
 
-# (X. Hvor naar er man ferdig med å snakke med kunde som ikke er interessert?)
+# (X. Hvor naar er man ferdig med ? snakke med kunde som ikke er interessert?)
 
